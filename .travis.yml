@@ -1,3 +1,5 @@
 language: android
 dist: trusty
 
+script:
+        - ./gradlew build
