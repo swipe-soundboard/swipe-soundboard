@@ -3,7 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <com.andrognito.patternlockview.PatternLockView
+        android:id="@+id/pattern_lock_view"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:correctStateColor="@color/swipeSoundboardGreen"
+        app:dotNormalSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:normalStateColor="@color/swipeSoundboardBlue"
+        app:pathWidth="10dp"
+        app:wrongStateColor="@color/colorAccent" />
     <TextView
         android:id="@+id/text_dashboard"
         android:layout_width="match_parent"
