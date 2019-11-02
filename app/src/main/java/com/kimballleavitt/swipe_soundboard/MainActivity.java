@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        Uri uri = Uri.parse("http://students.cs.byu.edu/~spleach/Stiletto.m4a");
-        SoundPlayer.getSoundPlayer().playSound(getApplicationContext(), uri);
     }
 
 }
