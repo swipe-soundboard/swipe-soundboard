@@ -54,13 +54,7 @@ public class DashboardFragment extends Fragment {
         };
         plv = root.findViewById(R.id.pattern_lock_view);
         plv.addPatternLockListener(listener);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         return root;
     }
 }

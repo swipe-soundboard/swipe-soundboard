@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.andrognito.patternlockview.PatternLockView;
+import com.andrognito.patternlockview.PatternLockView.PatternViewMode;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.kimballleavitt.swipe_soundboard.R;
 import com.kimballleavitt.swipe_soundboard.SoundPlayer;
 import com.kimballleavitt.swipe_soundboard.model.SoundMappings;
 
 import java.util.List;
+
+import static com.andrognito.patternlockview.PatternLockView.PatternViewMode.*;
 
 public class HomeFragment extends Fragment {
 
@@ -42,10 +45,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onComplete(List<PatternLockView.Dot> pattern) {
                 try {
-                    SoundPlayer.getSoundPlayer().playSound(getContext(), SoundMappings.getInstance().getSoundID(pattern));
-                }
-                catch (IndexOutOfBoundsException e) {
-                    Toast.makeText(getContext(), "Pattern hasn't been set!", Toast.LENGTH_LONG).show();
+                    int soundID = SoundMappings.getInstance().getSoundID(pattern);
+                    plv.setViewMode(CORRECT);
+                    SoundPlayer.getSoundPlayer().playSound(getContext(), soundID);
+                } catch (IndexOutOfBoundsException e) {
+                    plv.setViewMode(WRONG);
                 }
             }
 

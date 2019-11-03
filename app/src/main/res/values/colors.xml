@@ -5,5 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="swipeSoundboardBlue">#0D30F8</color>
     <color name="swipeSoundboardGreen">#0DE914</color>
+    <color name="swipeSoundboardRed">#FF0000</color>
     <color name="black">#000</color>
 </resources>
