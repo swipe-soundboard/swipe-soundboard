@@ -8,13 +8,13 @@
         android:id="@+id/pattern_lock_view"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        app:normalStateColor="@color/swipeSoundboardBlue"
         app:correctStateColor="@color/swipeSoundboardGreen"
+        app:wrongStateColor="@color/swipeSoundboardRed"
         app:dotNormalSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:normalStateColor="@color/swipeSoundboardBlue"
-        app:pathWidth="10dp"
-        app:wrongStateColor="@color/colorAccent" />
+        app:pathWidth="10dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
