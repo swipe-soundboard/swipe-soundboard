@@ -1,6 +1,9 @@
 package com.kimballleavitt.swipe_soundboard.model;
 
+import android.net.Uri;
+
 import com.andrognito.patternlockview.PatternLockView;
+import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,33 +12,53 @@ import java.util.Map;
 
 public class SoundMappings {
     private static SoundMappings soundMappings = new SoundMappings();
-    private SoundMappings() {}
+
+    private SoundMappings() {
+    }
+
     public static SoundMappings getInstance() {
         return soundMappings;
     }
 
-    private Map<StoragePattern, Integer> patternsToSounds = new HashMap<>();
+    private Map<StoragePattern, Uri> patternsToSounds = new HashMap<>();
 
-    public int getSoundID(List<PatternLockView.Dot> pattern) throws IndexOutOfBoundsException{
+    public Uri getSoundPath(List<PatternLockView.Dot> pattern) throws IndexOutOfBoundsException {
         if (!patternsToSounds.containsKey(new StoragePattern(pattern))) {
             throw new IndexOutOfBoundsException("Key Not Found");
-        }
-        else {
-            Integer i = patternsToSounds.get(new StoragePattern(pattern));
-            if (i == null) {
-                return 0;
-            }
-            return i;
+        } else {
+            return patternsToSounds.get(new StoragePattern(pattern));
         }
     }
 
-    public void addMapping(List<PatternLockView.Dot> pattern, int soundID) {
-        patternsToSounds.put(new StoragePattern(pattern), soundID);
+    public void removeMapping(List<PatternLockView.Dot> pattern) {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addMapping(List<PatternLockView.Dot> pattern, Uri fileUri, boolean replace) throws MappingExistsException {
+        assert fileUri != null;
+        boolean exists;
+        Uri existingUri = null;
+        try {
+            existingUri = getSoundPath(pattern);
+            exists = existingUri != null;
+        } catch (IndexOutOfBoundsException e) {
+            exists = false;
+        }
+        if (exists && !replace) {
+            throw new MappingExistsException("Pattern exists", existingUri);
+        }
+        patternsToSounds.put(new StoragePattern(pattern), fileUri);
+
     }
 
     private class StoragePattern {
         private List<Integer> x;
         private List<Integer> y;
+
         StoragePattern(List<PatternLockView.Dot> originalPatter) {
             x = new ArrayList<>();
             y = new ArrayList<>();
@@ -44,16 +67,17 @@ public class SoundMappings {
                 y.add(d.getColumn());
             }
         }
+
         StoragePattern(List<Integer> x, List<Integer> y) {
             this.x = x;
             this.y = y;
         }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) {
                 return true;
-            }
-            else if (!(o.getClass() == this.getClass())) {
+            } else if (!(o.getClass() == this.getClass())) {
                 return false;
             }
             StoragePattern sp = (StoragePattern) o;
@@ -70,6 +94,7 @@ public class SoundMappings {
             }
             return true;
         }
+
         @Override
         public int hashCode() {
             int hash = 0;
