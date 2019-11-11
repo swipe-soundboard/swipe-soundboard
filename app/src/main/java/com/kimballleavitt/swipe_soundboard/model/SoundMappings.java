@@ -6,9 +6,11 @@ import com.andrognito.patternlockview.PatternLockView;
 import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SoundMappings {
     private static SoundMappings soundMappings = new SoundMappings();
@@ -21,6 +23,18 @@ public class SoundMappings {
     }
 
     private Map<StoragePattern, Uri> patternsToSounds = new HashMap<>();
+
+    public int size() {
+        return patternsToSounds.size();
+    }
+
+    public List<StoragePattern> keys() {
+        return new ArrayList<>(patternsToSounds.keySet());
+    }
+
+    public List<Uri> values() {
+        return new ArrayList<>(patternsToSounds.values());
+    }
 
     public Uri getSoundPath(List<PatternLockView.Dot> pattern) throws IndexOutOfBoundsException {
         if (!patternsToSounds.containsKey(new StoragePattern(pattern))) {
@@ -55,7 +69,7 @@ public class SoundMappings {
 
     }
 
-    private class StoragePattern {
+    public class StoragePattern {
         private List<Integer> x;
         private List<Integer> y;
 
