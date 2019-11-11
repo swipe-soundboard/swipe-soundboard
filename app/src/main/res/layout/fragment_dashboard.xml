@@ -4,54 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView android:id="@+id/instructions"
-        app:layout_constraintTop_toBottomOf="@+id/pattern_lock_view"
+    <TextView
+        android:id="@+id/instructions"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="100dp"
+        android:text="Map new patterns to all the sounds, and delete the ones you hate."
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/pattern_lock_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_height="100dp"
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="100dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="Map new patterns to all the sounds, and delete the ones you hate."
-        android:textColor="@color/white"/>
+        app:layout_constraintTop_toBottomOf="@+id/pattern_lock_view" />
 
     <com.andrognito.patternlockview.PatternLockView
         android:id="@+id/pattern_lock_view"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        app:normalStateColor="@color/swipeSoundboardBlue"
         app:correctStateColor="@color/swipeSoundboardGreen"
-        app:wrongStateColor="@color/swipeSoundboardRed"
         app:dotNormalSize="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/instructions"
-        app:pathWidth="10dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:layout_constraintRight_toLeftOf="@+id/delete"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pattern_lock_view"
-        android:layout_marginTop="40dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_delete"
-        app:color="@color/white"
-        app:layout_constraintLeft_toRightOf="@+id/add"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pattern_lock_view"
-        android:layout_marginTop="40dp" />
+        app:normalStateColor="@color/swipeSoundboardBlue"
+        app:pathWidth="10dp"
+        app:wrongStateColor="@color/swipeSoundboardRed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
