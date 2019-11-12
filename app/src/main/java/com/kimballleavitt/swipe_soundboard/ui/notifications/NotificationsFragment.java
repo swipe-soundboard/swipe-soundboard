@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +32,7 @@ public class NotificationsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
         recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new MyAdapter());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return root;
     }
@@ -51,6 +52,21 @@ public class NotificationsFragment extends Fragment {
             public MyViewHolder(View v) {
                 super(v);
                 textView = v.findViewById(R.id.sound_path_name);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SoundMappings.StoragePattern pattern = (SoundMappings.StoragePattern) textView.getTag();
+                        itemView.setBackgroundColor(getResources().getColor(R.color.white));
+                        textView.setTextColor(getResources().getColor(R.color.black));
+                        for (int childCount = recyclerView.getChildCount(), i = 0; i < childCount; ++i) {
+                            final MyViewHolder holder = (MyViewHolder) recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+                            if (!holder.itemView.equals(itemView)) {
+                                holder.textView.setTextColor(getResources().getColor(R.color.white));
+                                holder.itemView.setBackgroundColor(getResources().getColor(R.color.black));
+                            }
+                        }
+                    }
+                });
             }
         }
 
@@ -78,6 +94,7 @@ public class NotificationsFragment extends Fragment {
             assert path != null;
             String strippedPath = PathStripper.strip(path);
             holder.textView.setText(strippedPath);
+            holder.textView.setTag(keys.get(position));
         }
 
         // Return the size of your dataset (invoked by the layout manager)

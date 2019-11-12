@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.andrognito.patternlockview.PatternLockView;
 import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -69,7 +70,7 @@ public class SoundMappings {
 
     }
 
-    public class StoragePattern {
+    public class StoragePattern implements Serializable {
         private List<Integer> x;
         private List<Integer> y;
 
