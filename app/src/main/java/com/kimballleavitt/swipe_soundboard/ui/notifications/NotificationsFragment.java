@@ -1,6 +1,5 @@
 package com.kimballleavitt.swipe_soundboard.ui.notifications;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,6 @@ import com.kimballleavitt.swipe_soundboard.R;
 import com.kimballleavitt.swipe_soundboard.model.SoundMappings;
 import com.kimballleavitt.swipe_soundboard.util.PathStripper;
 
-import java.util.List;
-
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
@@ -35,6 +32,8 @@ public class NotificationsFragment extends Fragment {
         recyclerView.setAdapter(new MyAdapter());
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        PatternLockView patternLockView = root.findViewById(R.id.pattern_lock_view);
+        patternLockView.setInputEnabled(false);
         return root;
     }
 
