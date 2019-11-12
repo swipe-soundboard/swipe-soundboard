@@ -39,8 +39,6 @@ public class NotificationsFragment extends Fragment {
     }
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-        private SoundMappings soundMappings;
-
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
         // you provide access to all the views for a data item in a view holder
@@ -73,7 +71,7 @@ public class NotificationsFragment extends Fragment {
 
         // Provide a suitable constructor (depends on the kind of dataset)
         public MyAdapter() {
-            soundMappings = SoundMappings.getInstance();
+
         }
 
         // Create new views (invoked by the layout manager)
@@ -89,17 +87,18 @@ public class NotificationsFragment extends Fragment {
         // Replace the contents of a view (invoked by the layout manager)
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            String path = soundMappings.values().get(position).getPath();
+            String path = SoundMappings.getInstance().values().get(position).getPath();
             assert path != null;
             String strippedPath = PathStripper.strip(path);
             holder.textView.setText(strippedPath);
-            holder.textView.setTag(soundMappings.keys().get(position));
+            SoundMappings.StoragePattern pattern = SoundMappings.getInstance().keys().get(position);
+            holder.textView.setTag(pattern);
         }
 
         // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
-            return soundMappings.size();
+            return SoundMappings.getInstance().size();
         }
     }
 }

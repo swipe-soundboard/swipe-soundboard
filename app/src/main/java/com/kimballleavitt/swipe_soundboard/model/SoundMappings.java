@@ -47,7 +47,7 @@ public class SoundMappings {
 
     public void removeMapping(List<PatternLockView.Dot> pattern) {
         try {
-
+            // TODO
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,7 +77,7 @@ public class SoundMappings {
         StoragePattern(List<PatternLockView.Dot> originalPattern) {
             x = new ArrayList<>();
             y = new ArrayList<>();
-            this.originalPattern = originalPattern;
+            this.originalPattern = new ArrayList<>(originalPattern);
             for (PatternLockView.Dot d : originalPattern) {
                 x.add(d.getRow());
                 y.add(d.getColumn());
