@@ -67,17 +67,18 @@ public class SoundMappings {
             throw new MappingExistsException("Pattern exists", existingUri);
         }
         patternsToSounds.put(new StoragePattern(pattern), fileUri);
-
     }
 
     public class StoragePattern implements Serializable {
         private List<Integer> x;
         private List<Integer> y;
+        private List<PatternLockView.Dot> originalPattern;
 
-        StoragePattern(List<PatternLockView.Dot> originalPatter) {
+        StoragePattern(List<PatternLockView.Dot> originalPattern) {
             x = new ArrayList<>();
             y = new ArrayList<>();
-            for (PatternLockView.Dot d : originalPatter) {
+            this.originalPattern = originalPattern;
+            for (PatternLockView.Dot d : originalPattern) {
                 x.add(d.getRow());
                 y.add(d.getColumn());
             }
@@ -120,6 +121,10 @@ public class SoundMappings {
                 hash *= 10;
             }
             return hash / 10;
+        }
+
+        public List<PatternLockView.Dot> getOriginalPattern() {
+            return originalPattern;
         }
     }
 }

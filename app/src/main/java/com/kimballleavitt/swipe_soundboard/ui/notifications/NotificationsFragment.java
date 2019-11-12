@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.andrognito.patternlockview.PatternLockView;
 import com.kimballleavitt.swipe_soundboard.R;
 import com.kimballleavitt.swipe_soundboard.model.SoundMappings;
 import com.kimballleavitt.swipe_soundboard.util.PathStripper;
@@ -39,8 +40,6 @@ public class NotificationsFragment extends Fragment {
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         private SoundMappings soundMappings;
-        private List<SoundMappings.StoragePattern> keys;
-        private List<Uri> values;
 
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
@@ -65,6 +64,8 @@ public class NotificationsFragment extends Fragment {
                                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.black));
                             }
                         }
+                        PatternLockView patternLockView = getView().findViewById(R.id.pattern_lock_view);
+                        patternLockView.setPattern(PatternLockView.PatternViewMode.AUTO_DRAW, pattern.getOriginalPattern());
                     }
                 });
             }
@@ -73,8 +74,6 @@ public class NotificationsFragment extends Fragment {
         // Provide a suitable constructor (depends on the kind of dataset)
         public MyAdapter() {
             soundMappings = SoundMappings.getInstance();
-            keys = soundMappings.keys();
-            values = soundMappings.values();
         }
 
         // Create new views (invoked by the layout manager)
@@ -90,11 +89,11 @@ public class NotificationsFragment extends Fragment {
         // Replace the contents of a view (invoked by the layout manager)
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            String path = values.get(position).getPath();
+            String path = soundMappings.values().get(position).getPath();
             assert path != null;
             String strippedPath = PathStripper.strip(path);
             holder.textView.setText(strippedPath);
-            holder.textView.setTag(keys.get(position));
+            holder.textView.setTag(soundMappings.keys().get(position));
         }
 
         // Return the size of your dataset (invoked by the layout manager)
