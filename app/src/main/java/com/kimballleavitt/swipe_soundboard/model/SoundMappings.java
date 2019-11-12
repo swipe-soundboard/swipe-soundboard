@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.andrognito.patternlockview.PatternLockView;
 import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,18 @@ public class SoundMappings {
 
     private Map<StoragePattern, Uri> patternsToSounds = new HashMap<>();
 
+    public int size() {
+        return patternsToSounds.size();
+    }
+
+    public List<StoragePattern> keys() {
+        return new ArrayList<>(patternsToSounds.keySet());
+    }
+
+    public List<Uri> values() {
+        return new ArrayList<>(patternsToSounds.values());
+    }
+
     public Uri getSoundPath(List<PatternLockView.Dot> pattern) throws IndexOutOfBoundsException {
         if (!patternsToSounds.containsKey(new StoragePattern(pattern))) {
             throw new IndexOutOfBoundsException("Key Not Found");
@@ -32,7 +45,7 @@ public class SoundMappings {
 
     public void removeMapping(List<PatternLockView.Dot> pattern) {
         try {
-
+            // TODO
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,17 +65,18 @@ public class SoundMappings {
             throw new MappingExistsException("Pattern exists", existingUri);
         }
         patternsToSounds.put(new StoragePattern(pattern), fileUri);
-
     }
 
-    private class StoragePattern {
+    public class StoragePattern implements Serializable {
         private List<Integer> x;
         private List<Integer> y;
+        private List<PatternLockView.Dot> originalPattern;
 
-        StoragePattern(List<PatternLockView.Dot> originalPatter) {
+        StoragePattern(List<PatternLockView.Dot> originalPattern) {
             x = new ArrayList<>();
             y = new ArrayList<>();
-            for (PatternLockView.Dot d : originalPatter) {
+            this.originalPattern = new ArrayList<>(originalPattern);
+            for (PatternLockView.Dot d : originalPattern) {
                 x.add(d.getRow());
                 y.add(d.getColumn());
             }
@@ -105,6 +119,10 @@ public class SoundMappings {
                 hash *= 10;
             }
             return hash / 10;
+        }
+
+        public List<PatternLockView.Dot> getOriginalPattern() {
+            return originalPattern;
         }
     }
 }
