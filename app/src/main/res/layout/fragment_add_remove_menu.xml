@@ -22,7 +22,8 @@
             android:clickable="true"
             android:text="Add Default Sound"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="@android:color/holo_green_dark" />
+            android:textColor="@android:color/holo_green_dark"
+            android:padding="10dp" />
         <View
             android:layout_width="220dp"
             android:layout_height="1dp"
@@ -36,7 +37,8 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:clickable="true"
             android:text="Add Custom Sound"
-            android:textColor="@android:color/holo_green_dark" />
+            android:textColor="@android:color/holo_green_dark"
+            android:padding="10dp" />
         <View
             android:layout_width="220dp"
             android:layout_height="1dp"
@@ -50,7 +52,8 @@
             android:clickable="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:text="Cancel"
-            android:textColor="@android:color/holo_green_dark" />
+            android:textColor="@android:color/holo_green_dark"
+            android:padding="10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -69,7 +72,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="@android:color/holo_green_dark" />
+            android:textColor="@android:color/holo_green_dark"
+            android:padding="10dp" />
         <View
             android:layout_width="220dp"
             android:layout_height="1dp"
@@ -84,7 +88,8 @@
             android:clickable="true"
             android:text="Replace With New Sound"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="@android:color/holo_green_dark" />
+            android:textColor="@android:color/holo_green_dark"
+            android:padding="10dp" />
         <View
             android:layout_width="220dp"
             android:layout_height="1dp"
@@ -98,6 +103,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="@android:color/holo_green_dark"  />
+            android:textColor="@android:color/holo_green_dark"
+            android:padding="10dp" />
     </LinearLayout>
 </FrameLayout>
