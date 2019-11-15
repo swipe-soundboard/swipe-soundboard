@@ -41,6 +41,7 @@ dependencies {
 
 //    implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
     implementation 'com.github.swipe-soundboard:patternlockview:master-SNAPSHOT'
+    implementation fileTree(dir: 'src\\main\\lib\\gson-2.2.2.jar', include: ['*.aar', '*.jar'], exclude: [])
 }
 
 
