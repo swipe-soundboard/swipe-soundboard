@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andrognito.patternlockview.PatternLockView;
 import com.google.android.material.snackbar.Snackbar;
@@ -26,7 +27,9 @@ import java.util.Locale;
 
 
 public class AddRemoveMenu extends Fragment {
-    private static final int PICKFILE_RESULT_CODE = 1;
+    private static final int PICK_CUSTOM_SOUND = 1;
+    private static final int PICK_DEFAULT_SOUND = 2;
+
     private DashboardFragment parent;
     private List<PatternLockView.Dot> currPattern;
     private Uri currFileUri;
@@ -60,6 +63,8 @@ public class AddRemoveMenu extends Fragment {
         tv.setOnClickListener(new CancelOnClickListener(parent));
         tv = v.findViewById(R.id.cancel_remove);
         tv.setOnClickListener(new CancelOnClickListener(parent));
+        tv = v.findViewById(R.id.add_default_sound);
+        tv.setOnClickListener(new DefaultSoundOnClickListener(parent));
         tv = v.findViewById(R.id.add_custom_sound);
         tv.setOnClickListener(new CustomSoundOnClickListener(parent));
         tv = v.findViewById(R.id.remove_sound);
@@ -77,6 +82,16 @@ public class AddRemoveMenu extends Fragment {
         return v;
     }
 
+    public class DefaultSoundOnClickListener implements View.OnClickListener {
+        private DashboardFragment df;
+        public DefaultSoundOnClickListener(DashboardFragment df) {this.df = df;}
+        @Override
+        public void onClick(View v) {
+            Intent chooseDefaultSound = new Intent(getContext(), AddDefaultSound.class);
+            startActivityForResult(chooseDefaultSound, PICK_DEFAULT_SOUND);
+        }
+    }
+
     public class CancelOnClickListener implements View.OnClickListener {
         private DashboardFragment df;
         public CancelOnClickListener(DashboardFragment df) {this.df = df;}
@@ -91,7 +106,7 @@ public class AddRemoveMenu extends Fragment {
             Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
             chooseFile.setType("audio/*");
             chooseFile = Intent.createChooser(chooseFile, "Pick a sound to go with this currPattern");
-            startActivityForResult(chooseFile, PICKFILE_RESULT_CODE);
+            startActivityForResult(chooseFile, PICK_CUSTOM_SOUND);
         }
     }
     public class RemoveOnClickListener implements View.OnClickListener {
@@ -138,9 +153,14 @@ public class AddRemoveMenu extends Fragment {
     };
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICKFILE_RESULT_CODE) {
+        if (requestCode == PICK_CUSTOM_SOUND || requestCode == PICK_DEFAULT_SOUND) {
             if (resultCode == -1) {
-                currFileUri = data.getData();
+                if (requestCode == PICK_DEFAULT_SOUND) {
+                    int resId = data.getIntExtra("id", -1);
+                    currFileUri = Uri.parse("android.resource://" + getContext().getPackageName() + '/' + resId);
+                } else {
+                    currFileUri = data.getData();
+                }
                 assert currFileUri != null;
                 assert currPattern != null;
                 try {
