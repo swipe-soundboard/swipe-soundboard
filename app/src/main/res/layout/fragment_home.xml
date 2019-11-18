@@ -10,7 +10,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="100dp"
-        android:text="My sound board?\n\nI swipe dat."
+        android:text="Sound boards?\n\nI swipe that."
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
