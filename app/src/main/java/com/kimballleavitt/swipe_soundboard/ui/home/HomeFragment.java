@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
                     Uri soundPath = SoundMappings.getInstance().getSoundPath(pattern);
                     plv.setViewMode(CORRECT);
                     String mimeType = URLConnection.guessContentTypeFromName(soundPath.getPath());
-                    if (mimeType.startsWith("video/")) {
+                    if (mimeType != null && mimeType.startsWith("video/")) {
                         Intent videoIntent = new Intent(getContext(), VideoActivity.class);
                         videoIntent.setData(soundPath);
                         startActivityForResult(videoIntent, PLAY_VIDEO);
