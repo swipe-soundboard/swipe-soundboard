@@ -104,7 +104,7 @@ public class AddRemoveMenu extends Fragment {
         public CustomSoundOnClickListener(DashboardFragment df) {this.df = df;}
         public void onClick(View v) {
             Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-            chooseFile.setType("audio/*");
+            chooseFile.setType("*/*");
             chooseFile = Intent.createChooser(chooseFile, "Pick a sound to go with this currPattern");
             startActivityForResult(chooseFile, PICK_CUSTOM_SOUND);
         }
