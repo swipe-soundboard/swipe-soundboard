@@ -55,16 +55,6 @@ public class AddDefaultSound extends AppCompatActivity {
                         returnIntent.putExtra("id", Integer.parseInt(textView.getTag().toString()));
                         setResult(Activity.RESULT_OK, returnIntent);
                         finish();
-//                        SoundMappings.StoragePattern pattern = (SoundMappings.StoragePattern) textView.getTag();
-//                        itemView.setBackgroundColor(getResources().getColor(R.color.white));
-//                        textView.setTextColor(getResources().getColor(R.color.black));
-//                        for (int childCount = recyclerView.getChildCount(), i = 0; i < childCount; ++i) {
-//                            final AddDefaultSound.MyAdapter.MyViewHolder holder = (AddDefaultSound.MyAdapter.MyViewHolder) recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
-//                            if (!holder.itemView.equals(itemView)) {
-//                                holder.textView.setTextColor(getResources().getColor(R.color.white));
-//                                holder.itemView.setBackgroundColor(getResources().getColor(R.color.black));
-//                            }
-//                        }
                     }
                 });
             }
