@@ -1,11 +1,13 @@
 package com.kimballleavitt.swipe_soundboard.model;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.net.Uri;
 
 import com.andrognito.patternlockview.PatternLockView;
 import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,10 +64,13 @@ public class SoundMappings {
         }
         return exists;
     }
+
     public void addMapping(List<PatternLockView.Dot> pattern, Context c, int resourceID, boolean replace) throws  MappingExistsException{
         addMapping(pattern, Uri.parse("android.resource://" + c.getPackageName() + '/' + resourceID ), replace);
     }
+
     public void addMapping(List<PatternLockView.Dot> pattern, Uri fileUri, boolean replace) throws MappingExistsException {
+        
         assert fileUri != null;
         boolean exists;
         Uri existingUri = null;

@@ -2,6 +2,7 @@ package com.kimballleavitt.swipe_soundboard;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class AddDefaultSound extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_default_sound);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new AddDefaultSound.MyAdapter(R.raw.class.getFields()));
