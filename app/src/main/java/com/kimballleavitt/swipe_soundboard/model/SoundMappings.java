@@ -21,6 +21,10 @@ import java.util.Map;
 import java.util.Scanner;
 import com.google.gson.*;
 
+// This class stores the pattern and sound mappings using a map of StoragePattern->URI
+// It can be queried for either the list of keys or the list of values
+// SoundMappings is a singleton that can be called by other classes in order to
+// access its data members
 public class SoundMappings {
     private static SoundMappings soundMappings = new SoundMappings();
     private Gson serializer;
