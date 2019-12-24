@@ -129,12 +129,14 @@ public class AddRemoveMenu extends Fragment {
     private DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+            String filename = "";
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
                     assert currFileUri != null;
+                    filename = getResources().getResourceEntryName(which);
                     assert currPattern != null;
                     try {
-                        SoundMappings.getInstance().addMapping(currPattern, currFileUri, true);
+                        SoundMappings.getInstance().addMapping(currPattern, currFileUri, filename, true);
                         Snackbar.make(getView(), "✅ Sound mapping added", Snackbar.LENGTH_SHORT).show();
                     } catch (MappingExistsException e) {
                         e.printStackTrace();
@@ -153,18 +155,21 @@ public class AddRemoveMenu extends Fragment {
     };
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String filename = "";
+        int resId = 0;
         if (requestCode == PICK_CUSTOM_SOUND || requestCode == PICK_DEFAULT_SOUND) {
             if (resultCode == -1) {
                 if (requestCode == PICK_DEFAULT_SOUND) {
-                    int resId = data.getIntExtra("id", -1);
+                    resId = data.getIntExtra("id", -1);
                     currFileUri = Uri.parse("android.resource://" + getContext().getPackageName() + '/' + resId);
                 } else {
                     currFileUri = data.getData();
                 }
                 assert currFileUri != null;
+                filename = getResources().getResourceEntryName(resId);
                 assert currPattern != null;
                 try {
-                    SoundMappings.getInstance().addMapping(currPattern, currFileUri, true);
+                    SoundMappings.getInstance().addMapping(currPattern, currFileUri, filename, true);
                     Snackbar.make(getView(), "✅ Sound mapping added", Snackbar.LENGTH_SHORT).show();
                 } catch (MappingExistsException e) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

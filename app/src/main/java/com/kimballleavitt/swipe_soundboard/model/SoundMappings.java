@@ -66,19 +66,15 @@ public class SoundMappings {
 
     public void removeMapping(List<PatternLockView.Dot> pattern) {
         try {
-<<<<<<< HEAD
             StoragePattern toRemove = new StoragePattern(pattern);
-            if(patternsToSounds.containsKey(toRemove)) {
+            if (patternsToSounds.containsKey(toRemove)) {
                 patternsToSounds.remove(toRemove);
-            }
-            else {
+            } else {
                 System.out.println("That pattern isn't mapped to anything!");
                 return;
             }
-=======
-            patternsToSounds.remove(new StoragePattern(pattern));
->>>>>>> master
-        } catch (Exception e) {
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
     }
@@ -94,10 +90,12 @@ public class SoundMappings {
         return exists;
     }
     public void addMapping(List<PatternLockView.Dot> pattern, Context c, int resourceID, boolean replace) throws  MappingExistsException{
-        addMapping(pattern, Uri.parse("android.resource://" + c.getPackageName() + '/' + resourceID ), replace);
+        String filename = c.getResources().getResourceEntryName(resourceID);
+        addMapping(pattern, Uri.parse("android.resource://" + c.getPackageName() + '/' + resourceID ),filename, replace);
     }
-    public void addMapping(List<PatternLockView.Dot> pattern, Uri fileUri, boolean replace) throws MappingExistsException {
+    public void addMapping(List<PatternLockView.Dot> pattern, Uri fileUri, String filename, boolean replace) throws MappingExistsException {
         assert fileUri != null;
+        System.out.println(filename);
         boolean exists;
         Uri existingUri = null;
         try {
