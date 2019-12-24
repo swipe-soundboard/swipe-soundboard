@@ -16,7 +16,7 @@
             android:supportsPictureInPicture="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:launchMode="singleTask">
-            ></activity>
+        </activity>
         <activity android:name=".AddDefaultSound" />
         <activity
             android:name=".MainActivity"

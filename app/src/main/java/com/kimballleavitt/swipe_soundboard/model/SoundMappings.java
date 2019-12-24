@@ -4,8 +4,10 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.andrognito.patternlockview.PatternLockView;
+import com.google.common.collect.HashBiMap;
 import com.google.gson.reflect.TypeToken;
 import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
+import com.google.common.collect.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -22,6 +24,8 @@ import com.google.gson.*;
 public class SoundMappings {
     private static SoundMappings soundMappings = new SoundMappings();
     private Gson serializer;
+    private Map<StoragePattern, Uri> patternsToSounds = new HashMap<>();
+    private BiMap<String, StoragePattern> namePatternBiMap = HashBiMap.create();
 
     private SoundMappings() {
         serializer = new Gson();
@@ -41,8 +45,6 @@ public class SoundMappings {
     public static SoundMappings getInstance() {
         return soundMappings;
     }
-
-    private Map<StoragePattern, Uri> patternsToSounds = new HashMap<>();
 
     public int size() {
         return patternsToSounds.size();
