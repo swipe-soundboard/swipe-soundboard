@@ -1,5 +1,6 @@
 package com.kimballleavitt.swipe_soundboard.model;
 
+import android.content.Context;
 import android.net.Uri;
 
 import com.andrognito.patternlockview.PatternLockView;
@@ -65,6 +66,7 @@ public class SoundMappings {
 
     public void removeMapping(List<PatternLockView.Dot> pattern) {
         try {
+<<<<<<< HEAD
             StoragePattern toRemove = new StoragePattern(pattern);
             if(patternsToSounds.containsKey(toRemove)) {
                 patternsToSounds.remove(toRemove);
@@ -73,11 +75,27 @@ public class SoundMappings {
                 System.out.println("That pattern isn't mapped to anything!");
                 return;
             }
+=======
+            patternsToSounds.remove(new StoragePattern(pattern));
+>>>>>>> master
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    public boolean contains(List <PatternLockView.Dot> pattern) {
+        boolean exists;
+        Uri existingUri = null;
+        try {
+            existingUri = getSoundPath(pattern);
+            exists = existingUri != null;
+        } catch (IndexOutOfBoundsException e) {
+            exists = false;
+        }
+        return exists;
+    }
+    public void addMapping(List<PatternLockView.Dot> pattern, Context c, int resourceID, boolean replace) throws  MappingExistsException{
+        addMapping(pattern, Uri.parse("android.resource://" + c.getPackageName() + '/' + resourceID ), replace);
+    }
     public void addMapping(List<PatternLockView.Dot> pattern, Uri fileUri, boolean replace) throws MappingExistsException {
         assert fileUri != null;
         boolean exists;

@@ -32,7 +32,6 @@ public class SoundPlayer {
                     == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 mediaPlayer.start();
             }
-
         } catch (IOException exception){
             System.out.println("File not found!\n" + exception.getMessage());
             exception.printStackTrace();
