@@ -50,11 +50,19 @@ public class SoundMappings {
         return patternsToSounds.size();
     }
 
-    public List<StoragePattern> keys() {
+    public List<StoragePattern> pattern2Soundkeys() {
         return new ArrayList<>(patternsToSounds.keySet());
     }
 
-    public List<Uri> values() {
+    public List<String> file2PatternKeys() {
+        return new ArrayList<>(namePatternBiMap.keySet());
+    }
+
+    public List<StoragePattern> file2PatternValues(){
+        return new ArrayList<>(namePatternBiMap.values());
+    }
+
+    public List<Uri> pattern2SoundValues() {
         return new ArrayList<>(patternsToSounds.values());
     }
 
@@ -71,6 +79,7 @@ public class SoundMappings {
             StoragePattern toRemove = new StoragePattern(pattern);
             if (patternsToSounds.containsKey(toRemove)) {
                 patternsToSounds.remove(toRemove);
+                namePatternBiMap.inverse().remove(toRemove);
             } else {
                 System.out.println("That pattern isn't mapped to anything!");
                 return;
@@ -109,7 +118,11 @@ public class SoundMappings {
         if (exists && !replace) {
             throw new MappingExistsException("Pattern exists", existingUri);
         }
-        patternsToSounds.put(new StoragePattern(pattern), fileUri);
+        else {
+            StoragePattern newPattern = new StoragePattern(pattern);
+            patternsToSounds.put(newPattern, fileUri);
+            namePatternBiMap.put(filename, newPattern);
+        }
     }
 
     public void saveMappings() {

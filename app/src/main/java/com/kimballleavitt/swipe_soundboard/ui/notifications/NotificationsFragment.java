@@ -86,11 +86,12 @@ public class NotificationsFragment extends Fragment {
         // Replace the contents of a view (invoked by the layout manager)
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            String path = SoundMappings.getInstance().values().get(position).getPath();
+            String path = SoundMappings.getInstance().pattern2SoundValues().get(position).getPath();
+            String filename = SoundMappings.getInstance().file2PatternKeys().get(position);
             assert path != null;
             String strippedPath = PathStripper.strip(path);
-            holder.textView.setText(strippedPath);
-            SoundMappings.StoragePattern pattern = SoundMappings.getInstance().keys().get(position);
+            holder.textView.setText(filename);
+            SoundMappings.StoragePattern pattern = SoundMappings.getInstance().pattern2Soundkeys().get(position);
             holder.textView.setTag(pattern);
         }
 

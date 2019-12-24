@@ -21,7 +21,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
 import com.kimballleavitt.swipe_soundboard.model.SoundMappings;
 import com.kimballleavitt.swipe_soundboard.ui.dashboard.DashboardFragment;
+import com.kimballleavitt.swipe_soundboard.util.PathStripper;
 
+import java.io.File;
+import java.net.URI;
 import java.util.List;
 import java.util.Locale;
 
@@ -166,7 +169,13 @@ public class AddRemoveMenu extends Fragment {
                     currFileUri = data.getData();
                 }
                 assert currFileUri != null;
-                filename = getResources().getResourceEntryName(resId);
+                if (resId != 0) {
+                    filename = getResources().getResourceEntryName(resId);
+                }
+                else {
+                    filename = currFileUri.getLastPathSegment();
+                    filename = filename.substring(filename.lastIndexOf("/" ) + 1);
+                }
                 assert currPattern != null;
                 try {
                     SoundMappings.getInstance().addMapping(currPattern, currFileUri, filename, true);
