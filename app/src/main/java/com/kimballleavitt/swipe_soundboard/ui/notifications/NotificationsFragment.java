@@ -18,6 +18,8 @@ import com.kimballleavitt.swipe_soundboard.R;
 import com.kimballleavitt.swipe_soundboard.model.SoundMappings;
 import com.kimballleavitt.swipe_soundboard.util.PathStripper;
 
+import java.io.File;
+
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
@@ -88,9 +90,32 @@ public class NotificationsFragment extends Fragment {
         public void onBindViewHolder(MyViewHolder holder, int position) {
             String path = SoundMappings.getInstance().values().get(position).getPath();
             assert path != null;
-            String strippedPath = PathStripper.strip(path);
+            // Get the file we are going after
+            File file = new File(path);
+            // Get the name of the file
+            String strippedPath = file.getName();
+            strippedPath = strippedPath.substring(strippedPath.lastIndexOf("/") + 1);
+            // Check to see if the "filename" we have gotten is actually a resource ID by
+            // attempting to parse it as an Integer. If an exception is thrown we will not
+            // convert it using GetResources, if it is resource ID we will get it using the
+            // Android API for getting a resource file name
+            boolean isInt = true;
+            int resId = 0;
+            try {
+                resId = Integer.parseInt(strippedPath);
+            }
+            catch (Exception e)
+            {
+                isInt = false;
+            }
+            if (isInt){
+                strippedPath = getResources().getResourceEntryName(resId);
+            }
+            // Set the list item's textView to the string that we have determined is the name of
+            // the file we will be playing
             holder.textView.setText(strippedPath);
             SoundMappings.StoragePattern pattern = SoundMappings.getInstance().keys().get(position);
+            // Then map the patten that corresponds to that file to the list item
             holder.textView.setTag(pattern);
         }
 
