@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andrognito.patternlockview.PatternLockView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kimballleavitt.swipe_soundboard.R;
 import com.kimballleavitt.swipe_soundboard.model.SoundMappings;
 import com.kimballleavitt.swipe_soundboard.util.PathStripper;
@@ -24,11 +25,11 @@ public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
     private RecyclerView recyclerView;
+    private BottomNavigationView navbar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
+        notificationsViewModel = ViewModelProviders.of(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
         recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new MyAdapter());
@@ -36,6 +37,22 @@ public class NotificationsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         PatternLockView patternLockView = root.findViewById(R.id.pattern_lock_view);
         patternLockView.setInputEnabled(false);
+        navbar = getActivity().findViewById(R.id.nav_view);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && navbar.isShown()) {
+                    navbar.setVisibility(View.GONE);
+                } else if (dy < 0 ) {
+                    navbar.setVisibility(View.VISIBLE);
+
+                }
+            }
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
         return root;
     }
 
