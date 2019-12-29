@@ -29,4 +29,10 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
+    @Override
+    public void onBackPressed(){
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setVisibility(View.VISIBLE);
+        super.onBackPressed();
+    }
 }

@@ -43,7 +43,7 @@ public class NotificationsFragment extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0 && navbar.isShown()) {
                     navbar.setVisibility(View.GONE);
-                } else if (dy < 0 ) {
+                } else if (dy < 0) {
                     navbar.setVisibility(View.VISIBLE);
 
                 }
