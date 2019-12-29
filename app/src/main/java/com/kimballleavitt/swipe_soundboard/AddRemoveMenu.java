@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,7 +136,9 @@ public class AddRemoveMenu extends Fragment {
                     assert currPattern != null;
                     try {
                         SoundMappings.getInstance().addMapping(currPattern, currFileUri, true);
-                        Snackbar.make(getView(), "✅ Sound mapping added", Snackbar.LENGTH_SHORT).show();
+                        Toast note = Toast.makeText(getContext(), getResources().getText(R.string.mapping_added), Toast.LENGTH_SHORT);
+                        note.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 200);
+                        note.show();
                     } catch (MappingExistsException e) {
                         e.printStackTrace();
                         Snackbar.make(getView(), "Error occurred adding mapping...awkward", Snackbar.LENGTH_SHORT).show();
@@ -165,7 +168,10 @@ public class AddRemoveMenu extends Fragment {
                 assert currPattern != null;
                 try {
                     SoundMappings.getInstance().addMapping(currPattern, currFileUri, true);
-                    Snackbar.make(getView(), "✅ Sound mapping added", Snackbar.LENGTH_SHORT).show();
+                    Toast note = Toast.makeText(getContext(), getResources().getText(R.string.mapping_added), Toast.LENGTH_SHORT);
+                    note.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 200);
+                    note.show();
+
                 } catch (MappingExistsException e) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage(String.format(Locale.US, "Pattern is already mapped to '%s'. Change to '%s'?",

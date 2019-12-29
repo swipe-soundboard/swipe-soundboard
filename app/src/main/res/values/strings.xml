@@ -1,12 +1,14 @@
 <resources>
-    <string name="app_name">swipe-soundboard</string>
+    <string name="app_name">Swipe\nSoundboard</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add_remove_mappings">Add/Remove Mappings</string>
+    <string name="add_remove_mappings">Add/Remove</string>
     <string name="view_mappings">View Mappings</string>
-    <string name="sound_boards_n_ni_swipe_that">Sound boards?  I swipe that.</string>
+    <string name="sound_boards_n_ni_swipe_that">The right sound for the every moment</string>
+    <string name="Map_Remove_string">Swipe a pattern and choose a sound\nSwipe an already mapped pattern to change or remove it</string>
+    <string name="mapping_added">Mapping Added!</string>
 </resources>
