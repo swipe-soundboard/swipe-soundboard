@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.andrognito.patternlockview.PatternLockView;
 import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ public class SoundMappings {
     private static SoundMappings soundMappings = new SoundMappings();
 
     private SoundMappings() {
+        this.initializeMappings();
     }
 
     public static SoundMappings getInstance() {
@@ -36,6 +38,38 @@ public class SoundMappings {
         return new ArrayList<>(patternsToSounds.values());
     }
 
+    private void initializeMappings(){
+        File file = new File("config.json");
+        if (file.exists() && !file.isDirectory()){
+            try {
+                System.out.println("config.json exists");
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("config.json does not exist");
+        }
+        System.out.println(file.getAbsolutePath());
+    }
+
+    public void saveMappings(){
+        File file = new File("config.json");
+        try {
+            if (file.createNewFile()) {
+                System.out.println("Creating config.json");
+            }
+            else {
+                System.out.println("writing over old file");
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //Returns the URI of the sound bite corresponding to the pattern swiped
     public Uri getSoundPath(List<PatternLockView.Dot> pattern) throws IndexOutOfBoundsException {
         if (!patternsToSounds.containsKey(new StoragePattern(pattern))) {
             throw new IndexOutOfBoundsException("Key Not Found");
@@ -43,7 +77,7 @@ public class SoundMappings {
             return patternsToSounds.get(new StoragePattern(pattern));
         }
     }
-
+    //Remove the mapping from our list
     public void removeMapping(List<PatternLockView.Dot> pattern) {
         try {
             patternsToSounds.remove(new StoragePattern(pattern));
@@ -51,6 +85,7 @@ public class SoundMappings {
             e.printStackTrace();
         }
     }
+    //Check if our list contains a mapping for the pattern that was swiped
     public boolean contains(List <PatternLockView.Dot> pattern) {
         boolean exists;
         Uri existingUri = null;
@@ -65,10 +100,13 @@ public class SoundMappings {
     public void addMapping(List<PatternLockView.Dot> pattern, Context c, int resourceID, boolean replace) throws  MappingExistsException{
         addMapping(pattern, Uri.parse("android.resource://" + c.getPackageName() + '/' + resourceID ), replace);
     }
+    //Check if the mapping exists, add it if it does not
     public void addMapping(List<PatternLockView.Dot> pattern, Uri fileUri, boolean replace) throws MappingExistsException {
         assert fileUri != null;
         boolean exists;
         Uri existingUri = null;
+        //If the URI returned by getSoundPath is not null, then that pattern already exists in our
+        //map, and therefore should not be changed unless the user wants to replace it
         try {
             existingUri = getSoundPath(pattern);
             exists = existingUri != null;
@@ -76,9 +114,10 @@ public class SoundMappings {
             exists = false;
         }
         if (exists && !replace) {
-            throw new MappingExistsException("Pattern exists", existingUri);
+            throw new MappingExistsException("Pattern exists already", existingUri);
         }
         patternsToSounds.put(new StoragePattern(pattern), fileUri);
+        this.saveMappings();
     }
 
     public class StoragePattern implements Serializable {
