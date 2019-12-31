@@ -5,15 +5,25 @@ import android.net.Uri;
 
 import com.andrognito.patternlockview.PatternLockView;
 import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
+import com.kimballleavitt.swipe_soundboard.util.Serializer;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SoundMappings {
     private static SoundMappings soundMappings = new SoundMappings();
-    private PatternSoundMappings patternsToSounds = new PatternSoundMappings();
+    private PatternSoundMappings patternsToSounds;
 
     private SoundMappings() {
         this.initializeMappings();
@@ -35,34 +45,64 @@ public class SoundMappings {
         return new ArrayList<>(patternsToSounds.values());
     }
 
+    // If a config file exists, initialize the mappings from the JSON
+    // Otherwise just create a new mappings object
     private void initializeMappings(){
+        Serializer serializer = Serializer.getInstance();
         File file = new File("config.json");
         if (file.exists() && !file.isDirectory()){
             try {
-                System.out.println("config.json exists");
+                InputStream is = new FileInputStream("config.json");
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String line = br.readLine();
+                StringBuilder sb = new StringBuilder();
+
+                while (line != null) {
+                    sb.append(line);
+                    line = br.readLine();
+                }
+
+                String JSON = sb.toString();
+                patternsToSounds = (PatternSoundMappings) serializer.fromJSON(JSON, PatternSoundMappings.class);
+                br.close();
+                is.close();
+                System.out.println("config.json exists, initializing list from config file");
             }
-            catch (Exception e){
+            catch (IOException e){
+                System.out.println("Error while attempting to retrieve config.json");
+                e.printStackTrace();
+            }
+            catch (Exception e) {
+                System.out.println("Error during initialization of mappings object");
                 e.printStackTrace();
             }
         }
         else {
-            System.out.println("config.json does not exist");
+            patternsToSounds = new PatternSoundMappings();
+            System.out.println("config.json does not exist yet");
         }
-        System.out.println(file.getAbsolutePath());
     }
 
     public void saveMappings(){
         File file = new File("config.json");
-        try {
-            if (file.createNewFile()) {
-                System.out.println("Creating config.json");
+        Serializer serializer = Serializer.getInstance();
+        if (file.exists()) {
+            try {
+                FileOutputStream fos = new FileOutputStream("config.json");
             }
-            else {
-                System.out.println("writing over old file");
+            catch (FileNotFoundException e) {
+                System.out.println("Error when attempting to write map into JSON");
+                e.printStackTrace();
             }
         }
-        catch(Exception e){
-            e.printStackTrace();
+        else {
+            try {
+                PrintWriter pw = new PrintWriter("config.json", "UTF-8");
+                pw.write(serializer.toJSON(patternsToSounds));
+            }
+            catch (FileNotFoundException | UnsupportedEncodingException e) {
+                System.out.println("Error when attempting to create new config file");
+            }
         }
     }
 
