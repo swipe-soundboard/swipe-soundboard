@@ -9,12 +9,11 @@ import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SoundMappings {
     private static SoundMappings soundMappings = new SoundMappings();
+    private PatternSoundMappings patternsToSounds = new PatternSoundMappings();
 
     private SoundMappings() {
         this.initializeMappings();
@@ -23,8 +22,6 @@ public class SoundMappings {
     public static SoundMappings getInstance() {
         return soundMappings;
     }
-
-    private Map<StoragePattern, Uri> patternsToSounds = new HashMap<>();
 
     public int size() {
         return patternsToSounds.size();
