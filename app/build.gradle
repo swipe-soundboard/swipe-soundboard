@@ -41,6 +41,7 @@ dependencies {
 
 //    implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
     implementation 'com.github.swipe-soundboard:patternlockview:master-SNAPSHOT'
+    implementation fileTree(dir: 'E:\\AndroidProjects\\swipe-soundboard\\lib\\libs\\', include: ['*.aar', '*.jar'], exclude: [])
 }
 
 
