@@ -8,10 +8,12 @@ import com.kimballleavitt.swipe_soundboard.exception.MappingExistsException;
 import com.kimballleavitt.swipe_soundboard.util.Serializer;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,6 +25,7 @@ import java.util.List;
 
 public class SoundMappings {
     private static SoundMappings soundMappings = new SoundMappings();
+    private static String config = "config.json";
     private PatternSoundMappings patternsToSounds;
 
     private SoundMappings() {
@@ -97,8 +100,9 @@ public class SoundMappings {
         }
         else {
             try {
-                PrintWriter pw = new PrintWriter("config.json", "UTF-8");
-                pw.write(serializer.toJSON(patternsToSounds));
+                BufferedWriter bw = new BufferedWriter(new FileWriter(c.getFilesDir()+))
+
+                bw.write(serializer.toJSON(patternsToSounds));
             }
             catch (FileNotFoundException | UnsupportedEncodingException e) {
                 System.out.println("Error when attempting to create new config file");

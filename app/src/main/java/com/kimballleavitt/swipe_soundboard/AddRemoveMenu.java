@@ -167,6 +167,7 @@ public class AddRemoveMenu extends Fragment {
                 assert currFileUri != null;
                 assert currPattern != null;
                 try {
+                    String test = getContext().getFilesDir().getAbsolutePath();
                     SoundMappings.getInstance().addMapping(currPattern, currFileUri, true);
                     Toast note = Toast.makeText(getContext(), getResources().getText(R.string.mapping_added), Toast.LENGTH_SHORT);
                     note.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 200);
